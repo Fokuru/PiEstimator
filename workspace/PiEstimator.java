@@ -13,12 +13,55 @@ public class PiEstimator{
 	
 public static void main(String[] args) {  
 	    JFrame f=new JFrame("Button Example");  
-	    JButton b=new JButton("Click Here");  
+		f.setLayout(new FlowLayout(FlowLayout.CENTER));
+	    JButton run=new JButton("Calculate");
 	    JLabel example = new JLabel(Double.toString(Math.PI));
+		
 	    f.add(example);
-	    f.add(b);  
+	    f.add(run); 
 	    f.setSize(300,300);  
 	    f.setLayout(new GridLayout(4, 1));  
 	    f.setVisible(true);      
+
+		run.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (run.getText() == "Pause"){
+					run.setText("Go");
+					System.out.println("Going");
+					f.setVisible(true);     
+				} else if (run.getText() == "Go"){
+					run.setText("Pause");
+					System.out.println("Pausing");
+					f.setVisible(true);     
+				} else {
+					run.setText("Pause");
+					System.out.println("Calcing");
+					f.setVisible(true);     
+				}
+				
+			}
+		});
 	}  
+
+	public class calcPi extends Thread {
+		boolean running = false;
+		
+
+		public final void waitNow(long timeout, int nanos) throws InterruptedException {
+			while (!running) {
+				wait();
+			}
+		}
+
+		synchronized void setReady() {
+			running = true;
+			notifyAll();
+		}
+
+		synchronized void setNotReady() {
+			running = false;
+			notifyAll();
+		}
+
+	}
 }
