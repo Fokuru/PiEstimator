@@ -21,13 +21,15 @@ public static void main(String[] args) {
 	    JLabel example = new JLabel("Actual Pi: " + Double.toString(Math.PI));
 		JLabel currentPi = new JLabel("Current Pi: " + Double.toString(0.0));
 		JLabel currentPoints = new JLabel("Current Points: " + Integer.toString(0));
+		JLabel currentPointsInCircle = new JLabel("Current Points: " + Integer.toString(0));
 
 	    f.add(example);
 	    f.add(run); 
 		f.add(currentPi); 
+		f.add(currentPointsInCircle); 
 		f.add(currentPoints); 
 	    f.setSize(300,300);  
-	    f.setLayout(new GridLayout(4, 1));  
+	    f.setLayout(new GridLayout(5, 1));  
 	    f.setVisible(true);      
 		int threads = 1;
 		calcPi[] thread = new calcPi[threads];
@@ -75,6 +77,7 @@ public static void main(String[] args) {
 			public void run() {
 				while (true) {
 				currentPi.setText("Current Pi: " + Double.toString(calcPi.curr));
+				currentPointsInCircle.setText("Current Points in Circle: " + Long.toString(calcPi.inSide));
 				currentPoints.setText("Current Points: " + Long.toString(calcPi.points));
 				f.repaint();     
 
